@@ -150,10 +150,16 @@ export function Home() {
   return (
     <div className="sky-home">
       <section className="relative overflow-hidden rounded-3xl border border-line bg-gradient-to-br from-navy-900 to-navy-700 px-6 py-14 text-white sm:px-12">
+        <img
+          src="/images/aviation-hero.png"
+          alt=""
+          aria-hidden="true"
+          className="sky-hero-aircraft"
+        />
         <div className="sky-hero-grid relative">
           <div className="sky-hero-copy">
             <span className="sky-eyebrow">SKYSEAT / PRIVATE AVIATION</span>
-            <h1 className="mt-4 text-4xl font-bold sm:text-5xl">Find your flight.<br />Choose your seat.<br />Own the journey.</h1>
+            <h1 className="mt-4 text-4xl font-bold sm:text-5xl">Your Journey.<br />Your Seat.</h1>
             <div className="sky-hero-rule" />
             <p className="mt-4 text-white/70">Thoughtful journeys, exceptional aircraft, and a seat that feels entirely yours.</p>
           </div>
@@ -163,35 +169,39 @@ export function Home() {
           </div>
         </div>
       </section>
-      <form onSubmit={go} className={card + ' relative -mt-8 mx-auto grid max-w-4xl gap-4 shadow-xl sm:grid-cols-2'}>
-        <div className="flex gap-2 sm:col-span-2" role="group" aria-label="Trip type">{[['oneway', 'One way'], ['round', 'Round trip'], ['multi', 'Multi-city']].map(([k, l]) => <button key={k} type="button" aria-pressed={s.trip === k} onClick={() => setTrip(k)} className={ghost + (s.trip === k ? ' !border-sky-brand text-sky-brand' : '')}>{l}</button>)}</div>
-        {s.trip === 'multi' ? (
-          <div className="space-y-3 sm:col-span-2">
-            {legs.map((l, i) => <div key={i} className="grid items-end gap-2 sm:grid-cols-[1fr_1fr_170px_auto]">
-              <AirportInput label={`Flight ${i + 1} from`} value={l.from} onChange={(v) => setLeg(i, { from: v })} /><AirportInput label={`Flight ${i + 1} to`} value={l.to} onChange={(v) => setLeg(i, { to: v })} />
-              <label className="block text-sm text-muted">Date<input type="date" required className={input + ' mt-1'} value={l.date} onChange={(e) => setLeg(i, { date: e.target.value })} /></label>
-              {legs.length > 2 ? <button type="button" aria-label={`Remove flight ${i + 1}`} className={ghost} onClick={() => upLegs(legs.filter((_, k) => k !== i))}>✕</button> : <span />}</div>)}
-            {legs.length < 4 && <button type="button" className={ghost} onClick={() => upLegs([...legs, { from: legs[legs.length - 1].to, to: legs[0].from, date: addDays(legs[legs.length - 1].date, 4) }])}>+ Add another flight</button>}
+      <div className="sky-booking-grid">
+        <form onSubmit={go} className={card + ' sky-booking-form grid gap-4 shadow-xl sm:grid-cols-2'}>
+          <div className="flex gap-2 sm:col-span-2" role="group" aria-label="Trip type">{[['oneway', 'One way'], ['round', 'Round trip'], ['multi', 'Multi-city']].map(([k, l]) => <button key={k} type="button" aria-pressed={s.trip === k} onClick={() => setTrip(k)} className={ghost + (s.trip === k ? ' !border-sky-brand text-sky-brand' : '')}>{l}</button>)}</div>
+          {s.trip === 'multi' ? (
+            <div className="space-y-3 sm:col-span-2">
+              {legs.map((l, i) => <div key={i} className="grid items-end gap-2 sm:grid-cols-[1fr_1fr_170px_auto]">
+                <AirportInput label={`Flight ${i + 1} from`} value={l.from} onChange={(v) => setLeg(i, { from: v })} /><AirportInput label={`Flight ${i + 1} to`} value={l.to} onChange={(v) => setLeg(i, { to: v })} />
+                <label className="block text-sm text-muted">Date<input type="date" required className={input + ' mt-1'} value={l.date} onChange={(e) => setLeg(i, { date: e.target.value })} /></label>
+                {legs.length > 2 ? <button type="button" aria-label={`Remove flight ${i + 1}`} className={ghost} onClick={() => upLegs(legs.filter((_, k) => k !== i))}>✕</button> : <span />}</div>)}
+              {legs.length < 4 && <button type="button" className={ghost} onClick={() => upLegs([...legs, { from: legs[legs.length - 1].to, to: legs[0].from, date: addDays(legs[legs.length - 1].date, 4) }])}>+ Add another flight</button>}
+            </div>
+          ) : (<>
+          <AirportInput label="From" value={s.from} onChange={(v) => set('from', v)} /><AirportInput label="To" value={s.to} onChange={(v) => set('to', v)} />
+          <label className="block text-sm text-muted">Departure date
+            <input type="date" required className={input + ' mt-1'} value={s.depart} onChange={(e) => setS({ ...s, depart: e.target.value, ret: s.ret < e.target.value ? addDays(e.target.value, 7) : s.ret })} /></label>
+          {s.trip === 'round' && <label className="block text-sm text-muted">Return date
+            <input type="date" required min={s.depart} className={input + ' mt-1'} value={s.ret} onChange={(e) => set('ret', e.target.value)} /></label>}
+          </>)}
+          <label className="block text-sm text-muted">Cabin
+            <select className={input + ' mt-1'} value={s.cabin} onChange={(e) => set('cabin', e.target.value)}>
+              {Object.entries(CABINS).map(([k, v]) => <option key={k} value={k}>{v.label}</option>)}</select></label>
+          <div className="grid gap-3 sm:col-span-2 sm:grid-cols-3">
+            <Counter k="adults" label="Adults" hint="18+" min={1} /><Counter k="children" label="Children" hint="2–17" min={0} /><Counter k="infants" label="Infants" hint="Under 2" min={0} />
           </div>
-        ) : (<>
-        <AirportInput label="From" value={s.from} onChange={(v) => set('from', v)} /><AirportInput label="To" value={s.to} onChange={(v) => set('to', v)} />
-        <label className="block text-sm text-muted">Departure date
-          <input type="date" required className={input + ' mt-1'} value={s.depart} onChange={(e) => setS({ ...s, depart: e.target.value, ret: s.ret < e.target.value ? addDays(e.target.value, 7) : s.ret })} /></label>
-        {s.trip === 'round' && <label className="block text-sm text-muted">Return date
-          <input type="date" required min={s.depart} className={input + ' mt-1'} value={s.ret} onChange={(e) => set('ret', e.target.value)} /></label>}
-        </>)}
-        <label className="block text-sm text-muted">Cabin
-          <select className={input + ' mt-1'} value={s.cabin} onChange={(e) => set('cabin', e.target.value)}>
-            {Object.entries(CABINS).map(([k, v]) => <option key={k} value={k}>{v.label}</option>)}</select></label>
-        <div className="grid gap-3 sm:col-span-2 sm:grid-cols-3">
-          <Counter k="adults" label="Adults" hint="18+" min={1} /><Counter k="children" label="Children" hint="2–17" min={0} /><Counter k="infants" label="Infants" hint="Under 2" min={0} />
+          <div className="flex flex-wrap gap-3 sm:col-span-2">
+            <button className={primary + ' flex-1'}>Search flights</button>
+            <button type="button" className={ghost} onClick={() => setS({ ...s, from: s.to, to: s.from })}>⇄ Swap</button>
+          </div>
+        </form>
+        <div className="sky-calendar-panel">
+          <PriceCalendar s={s} onPick={(d) => setS({ ...s, depart: d, ret: s.ret < d ? addDays(d, 7) : s.ret })} />
         </div>
-        <div className="flex flex-wrap gap-3 sm:col-span-2">
-          <button className={primary + ' flex-1'}>Search flights</button>
-          <button type="button" className={ghost} onClick={() => setS({ ...s, from: s.to, to: s.from })}>⇄ Swap</button>
-        </div>
-      </form>
-      <PriceCalendar s={s} onPick={(d) => setS({ ...s, depart: d, ret: s.ret < d ? addDays(d, 7) : s.ret })} />
+      </div>
     </div>
   )
 }
