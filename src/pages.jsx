@@ -62,7 +62,7 @@ function Trend({ s }) {
     </div>)
 }
 
-function RouteMap({ routes = [], plane = false, className = '' }) {
+function RouteMap({ routes = [], className = '' }) {
   const W = 800, H = 400
   const P = (c) => { const a = getAirport(c); return [((a.lng + 180) / 360) * W, ((90 - a.lat) / 180) * H] }
   return (
@@ -71,8 +71,7 @@ function RouteMap({ routes = [], plane = false, className = '' }) {
       {routes.map((r, i) => {
         const [x1, y1] = P(r.from), [x2, y2] = P(r.to)
         const d = `M${x1} ${y1} Q${(x1 + x2) / 2} ${Math.min(y1, y2) - Math.abs(x2 - x1) / 4 - 20} ${x2} ${y2}`
-        return <g key={i}><path id={'rt' + i} d={d} fill="none" stroke="#10b981" strokeWidth="2" strokeDasharray="6 6" /><circle cx={x1} cy={y1} r="5" fill="#10b981" /><circle cx={x2} cy={y2} r="5" fill="#f59e0b" />
-          {plane && i === 0 && <text fontSize="26" fill="currentColor"><animateMotion dur="6s" repeatCount="indefinite" rotate="auto"><mpath href={'#rt' + i} /></animateMotion>✈</text>}</g>
+        return <g key={i}><path id={'rt' + i} d={d} fill="none" stroke="#10b981" strokeWidth="2" strokeDasharray="6 6" /><circle cx={x1} cy={y1} r="5" fill="#10b981" /><circle cx={x2} cy={y2} r="5" fill="#f59e0b" /></g>
       })}
     </svg>)
 }
@@ -151,10 +150,17 @@ export function Home() {
   return (
     <div className="sky-home">
       <section className="relative overflow-hidden rounded-3xl border border-line bg-gradient-to-br from-navy-900 to-navy-700 px-6 py-14 text-white sm:px-12">
-        <RouteMap routes={[{ from: s.from, to: s.to }]} plane className="absolute inset-0 h-full w-full text-white opacity-60" />
-        <div className="relative max-w-xl">
-          <h1 className="text-4xl font-bold sm:text-5xl">Find the flight. Pick your seat. Go.</h1>
-          <p className="mt-3 text-white/70">Search 30 airports, compare up to three flights and manage every booking in one place.</p>
+        <div className="sky-hero-grid relative">
+          <div className="sky-hero-copy">
+            <span className="sky-eyebrow">SKYSEAT / PRIVATE AVIATION</span>
+            <h1 className="mt-4 text-4xl font-bold sm:text-5xl">Find your flight.<br />Choose your seat.<br />Own the journey.</h1>
+            <div className="sky-hero-rule" />
+            <p className="mt-4 text-white/70">Thoughtful journeys, exceptional aircraft, and a seat that feels entirely yours.</p>
+          </div>
+          <div className="sky-hero-detail" aria-hidden="true">
+            <span className="sky-hero-detail-line" />
+            <span>FLY FURTHER / ARRIVE DIFFERENT</span>
+          </div>
         </div>
       </section>
       <form onSubmit={go} className={card + ' relative -mt-8 mx-auto grid max-w-4xl gap-4 shadow-xl sm:grid-cols-2'}>

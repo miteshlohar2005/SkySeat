@@ -13,12 +13,8 @@ import {
 } from './pages.jsx'
 
 export default function App() {
-  const [theme, setTheme] = useState(() => localStorage.getItem('theme') || 'dark')
+  const [menuOpen, setMenuOpen] = useState(false)
   const { pathname } = useLocation()
-  useEffect(() => {
-    document.documentElement.dataset.theme = theme
-    localStorage.setItem('theme', theme)
-  }, [theme])
   useEffect(() => {
     window.scrollTo(0, 0)
   }, [pathname])
@@ -36,16 +32,18 @@ export default function App() {
             <span>SKY<span>SEAT</span></span>
             <span className="hidden brand-tag sm:inline-block">PRIVATE AVIATION / 01</span>
           </Link>
-          <div className="flex items-center gap-1.5">
-            <NavLink to="/" end className={nl}>Search</NavLink>
-            <NavLink to="/dashboard" className={nl}>My trips</NavLink>
-            <button
-              aria-label="Toggle theme"
-              className="ml-2 rounded-lg border border-line bg-surface px-2.5 py-1 text-sm text-ink transition hover:bg-surface-2"
-              onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-            >
-              {theme === 'dark' ? '☀' : '☾'}
-            </button>
+          <button
+            type="button"
+            className="sky-menu-toggle rounded-lg border border-line px-3 py-1.5 text-sm text-muted"
+            aria-expanded={menuOpen}
+            aria-controls="primary-navigation"
+            onClick={() => setMenuOpen(!menuOpen)}
+          >
+            Menu
+          </button>
+          <div id="primary-navigation" className={`sky-navigation flex items-center gap-1.5 ${menuOpen ? 'is-open' : ''}`}>
+            <NavLink to="/" end className={nl} onClick={() => setMenuOpen(false)}>Search</NavLink>
+            <NavLink to="/dashboard" className={nl} onClick={() => setMenuOpen(false)}>My trips</NavLink>
           </div>
         </nav>
       </header>
@@ -69,14 +67,10 @@ export default function App() {
         </div>
       </main>
 
-      <footer className="border-t border-line bg-surface/50 py-6 text-center text-xs text-muted">
-        <div className="mx-auto max-w-6xl px-4 flex flex-col sm:flex-row items-center justify-between gap-2">
-          <div>
-            <b>SkySeat</b> – Flight Seat Selection & Passenger Management Technical Assessment.
-          </div>
-          <div>
-            Originally based on open-source AeroLink by Muhammad Faiz Alam.
-          </div>
+      <footer className="border-t border-line bg-surface/50 py-8 text-center text-xs text-muted">
+        <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 px-4 sm:flex-row sm:text-left">
+          <div><b className="text-ink">SKYSEAT</b><span className="ml-3">Travel, considered.</span></div>
+          <div>Originally based on open-source AeroLink by Muhammad Faiz Alam.</div>
         </div>
       </footer>
     </div>

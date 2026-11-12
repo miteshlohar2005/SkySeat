@@ -13,7 +13,7 @@
   --color-danger: #d95d5b;
 }
 
-:root, [data-theme="dark"], [data-theme="light"] {
+:root {
   --bg: #080b0a;
   --surface: #171717;
   --surface-2: #242424;
@@ -49,28 +49,36 @@ button, input, select { font: inherit; }
 :focus-visible { outline: 2px solid #d45a56; outline-offset: 3px; }
 
 .sky-app { background: linear-gradient(180deg, rgba(6, 17, 12, .22), transparent 35%); }
-.sky-nav { border-color: rgba(245,242,237,.11) !important; background: rgba(8,11,10,.78) !important; }
+.sky-nav { position: relative; border-color: rgba(245,242,237,.11) !important; background: rgba(8,11,10,.78) !important; }
 .sky-brand { letter-spacing: .12em; }
 .sky-brand > span:first-of-type > span { color: #a31c1b; }
 .brand-mark { color: #a31c1b; font-size: 1.5rem; transform: rotate(45deg); }
 .brand-tag { color: var(--muted); font: 600 9px var(--font-sans); letter-spacing: .16em; }
 .sky-nav-link { color: var(--muted); }
 .sky-nav-link.is-active, .sky-nav-link:hover { color: var(--text) !important; background: rgba(163,28,27,.16); }
+.sky-menu-toggle { display: none; }
 
 main { position: relative; }
 .sky-home > section:first-child {
   min-height: 480px;
-  display: flex;
-  align-items: flex-end;
+  padding-top: 5rem;
+  padding-bottom: 5rem;
   background:
     linear-gradient(90deg, rgba(8,11,10,.92) 0%, rgba(8,11,10,.52) 48%, rgba(8,11,10,.25) 100%),
     linear-gradient(0deg, rgba(8,11,10,.78), transparent 55%),
     url('/images/aviation-hero.png') center / cover;
   border: 1px solid rgba(245,242,237,.15) !important;
   box-shadow: 0 30px 80px rgba(0,0,0,.32);
+  background-position: 64% center;
   animation: heroZoom 16s ease-in-out infinite alternate;
 }
-.sky-home > section:first-child h1 { max-width: 660px; font-size: clamp(2.7rem, 7vw, 5.7rem); line-height: .96; letter-spacing: -.07em; }
+.sky-hero-grid { display: grid; grid-template-columns: minmax(0, .9fr) minmax(260px, 1.1fr); align-items: end; gap: 2rem; width: 100%; }
+.sky-hero-copy { max-width: 580px; }
+.sky-eyebrow { color: #d45a56; font: 600 10px var(--font-sans); letter-spacing: .24em; }
+.sky-hero-rule { width: 72px; height: 1px; margin-top: 1.5rem; background: #a31c1b; }
+.sky-hero-detail { align-self: center; justify-self: end; color: rgba(245,242,237,.68); font: 600 9px var(--font-sans); letter-spacing: .2em; writing-mode: vertical-rl; }
+.sky-hero-detail-line { display: block; width: 1px; height: 84px; margin: 0 auto 1rem; background: rgba(245,242,237,.4); }
+.sky-home > section:first-child h1 { max-width: 660px; font-size: clamp(2.7rem, 5.5vw, 4.5rem); line-height: .98; letter-spacing: -.07em; }
 .sky-home > section:first-child p { max-width: 440px; font-size: 1rem; color: rgba(245,242,237,.72); }
 .sky-home > form { margin-top: -66px; background: rgba(23,23,23,.9); border-color: rgba(245,242,237,.18); backdrop-filter: blur(20px); }
 .sky-home > form::before { content: "DESIGN YOUR DEPARTURE"; display: block; grid-column: 1 / -1; color: #d45a56; font: 600 10px var(--font-sans); letter-spacing: .2em; }
@@ -144,9 +152,14 @@ footer { background: rgba(6,17,12,.48) !important; border-color: rgba(245,242,23
 
 @media (max-width: 640px) {
   .sky-home > section:first-child { min-height: 430px; padding: 2rem 1.25rem; }
+  .sky-hero-grid { grid-template-columns: 1fr; }
+  .sky-hero-detail { display: none; }
   .sky-home > form { margin-top: -32px; }
   .sky-brand { font-size: 1rem; }
-  .sky-nav .sky-nav-link { padding-inline: .5rem; font-size: .75rem; }
+  .sky-menu-toggle { display: block; }
+  .sky-navigation { display: none; position: absolute; top: 100%; right: 1rem; flex-direction: column; align-items: stretch; min-width: 150px; padding: .5rem; border: 1px solid var(--border); border-radius: 12px; background: rgba(23,23,23,.98); box-shadow: 0 18px 40px rgba(0,0,0,.4); }
+  .sky-navigation.is-open { display: flex; }
+  .sky-nav .sky-nav-link { padding-inline: .75rem; font-size: .75rem; }
   .sky-results, .sky-seats { margin-inline: -.5rem; padding-inline: .5rem; }
 }
 @media (prefers-reduced-motion: reduce) {
