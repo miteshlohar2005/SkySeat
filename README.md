@@ -6,6 +6,20 @@ Originally based on the open-source **AeroLink** project by Muhammad Faiz Alam, 
 
 ---
 
+## 📸 Application Screenshots
+
+### 1. Flight Search
+![Flight Search](docs/screenshots/home.png)
+
+### 2. Flight Results
+![Flight Results](docs/screenshots/flight-results.png)
+
+### 3. Aircraft Seat Selection
+![Seat Selection](docs/screenshots/seat-selection.png)
+
+### 4. Passenger Details
+![Passenger Details](docs/screenshots/passenger-details.png)
+
 ## Technical Assessment Requirements & Implementation
 
 ### 1. Aircraft Seat Layouts
