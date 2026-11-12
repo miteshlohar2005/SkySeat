@@ -60,7 +60,7 @@ button, input, select { font: inherit; }
 
 main { position: relative; }
 .sky-home > section:first-child {
-  min-height: 340px;
+  min-height: 320px;
   padding-top: 2rem;
   padding-bottom: 2rem;
   background:
@@ -68,21 +68,20 @@ main { position: relative; }
     linear-gradient(0deg, rgba(8,11,10,.72), transparent 55%);
   border: 1px solid rgba(245,242,237,.15) !important;
   box-shadow: 0 30px 80px rgba(0,0,0,.32);
+  animation: heroReveal .7s ease-out both;
 }
-.sky-hero-aircraft { position: absolute; z-index: 0; top: 0; right: 0; width: 67%; height: 100%; object-fit: contain; object-position: right center; opacity: .94; mask-image: linear-gradient(90deg, transparent 0%, black 19%, black 100%); animation: heroDrift 18s ease-in-out infinite alternate; }
+.sky-hero-aircraft { position: absolute; z-index: 0; top: -5%; right: -1%; width: 90%; height: 110%; object-fit: contain; object-position: right center; opacity: .96; mask-image: linear-gradient(90deg, transparent 0%, rgba(0,0,0,.2) 17%, black 38%, black 100%); animation: heroDrift 18s ease-in-out infinite alternate; }
 .sky-hero-grid { display: grid; grid-template-columns: minmax(0, .9fr) minmax(260px, 1.1fr); align-items: end; gap: 2rem; width: 100%; z-index: 1; }
 .sky-hero-copy { max-width: 580px; z-index: 2; }
 .sky-eyebrow { color: #d45a56; font: 600 10px var(--font-sans); letter-spacing: .24em; }
 .sky-hero-rule { width: 72px; height: 1px; margin-top: 1.5rem; background: #a31c1b; }
-.sky-hero-detail { align-self: center; justify-self: end; color: rgba(245,242,237,.68); font: 600 9px var(--font-sans); letter-spacing: .2em; writing-mode: vertical-rl; }
-.sky-hero-detail-line { display: block; width: 1px; height: 84px; margin: 0 auto 1rem; background: rgba(245,242,237,.4); }
 .sky-home > section:first-child h1 { max-width: 660px; font-size: clamp(2.25rem, 4vw, 3.7rem); line-height: .98; letter-spacing: -.07em; }
 .sky-home > section:first-child p { max-width: 440px; font-size: 1rem; color: rgba(245,242,237,.72); }
 .sky-booking-grid { display: grid; grid-template-columns: minmax(0, 1.22fr) minmax(340px, .9fr); align-items: stretch; gap: 1rem; margin-top: 1rem; }
-.sky-booking-form { background: rgba(23,23,23,.92); border-color: rgba(245,242,237,.18); backdrop-filter: blur(20px); }
+.sky-booking-form { background: rgba(23,23,23,.92); border-color: rgba(245,242,237,.18); backdrop-filter: blur(20px); animation: fadeUp .55s .12s ease-out both; }
 .sky-booking-form::before { content: "DESIGN YOUR DEPARTURE"; display: block; grid-column: 1 / -1; color: #d45a56; font: 600 10px var(--font-sans); letter-spacing: .2em; }
 .sky-calendar-panel { min-width: 0; }
-.sky-calendar-panel > section { height: 100%; margin-top: 0; }
+.sky-calendar-panel > section { height: 100%; margin-top: 0; animation: fadeUp .55s .2s ease-out both; }
 .sky-calendar-panel > section > div:nth-of-type(2) button { min-height: 3.1rem; }
 .sky-calendar-panel > section > div:first-child button { padding: .5rem .75rem; }
 .sky-calendar-panel > section p { margin-top: .75rem; }
@@ -97,6 +96,7 @@ input, select { color-scheme: dark; }
 input[type="date"]::-webkit-calendar-picker-indicator { filter: invert(1); opacity: .7; }
 
 .bg-sky-brand { background-color: #a31c1b !important; }
+.sky-booking-form button.bg-sky-brand { color: #fff !important; }
 .text-sky-brand { color: #d45a56 !important; }
 .border-sky-brand { border-color: #a31c1b !important; }
 .bg-success { background-color: #477d65 !important; }
@@ -149,16 +149,16 @@ input[type="date"]::-webkit-calendar-picker-indicator { filter: invert(1); opaci
 
 .page { animation: fadeUp .48s ease-out both; }
 @keyframes fadeUp { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+@keyframes heroReveal { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
 @keyframes heroDrift { from { transform: translate3d(0, 0, 0) scale(1); } to { transform: translate3d(-1.5%, 0, 0) scale(1.015); } }
 @keyframes fall { to { transform: translateY(110vh) rotate(540deg); opacity: 0; } }
 
 footer { background: rgba(6,17,12,.48) !important; border-color: rgba(245,242,237,.1) !important; }
 
 @media (max-width: 640px) {
-  .sky-home > section:first-child { min-height: 330px; padding: 2rem 1.25rem; }
+  .sky-home > section:first-child { min-height: 300px; padding: 2rem 1.25rem; }
   .sky-hero-grid { grid-template-columns: 1fr; }
-  .sky-hero-detail { display: none; }
-  .sky-hero-aircraft { top: auto; bottom: 0; width: 100%; height: 62%; opacity: .55; mask-image: linear-gradient(180deg, transparent 0%, black 42%); }
+  .sky-hero-aircraft { top: auto; right: -4%; bottom: 0; width: 112%; height: 68%; object-position: right center; opacity: .58; mask-image: linear-gradient(180deg, transparent 0%, black 42%); }
   .sky-booking-grid { grid-template-columns: 1fr; }
   .sky-calendar-panel > section { margin-top: 0; }
   .sky-brand { font-size: 1rem; }
@@ -170,8 +170,8 @@ footer { background: rgba(6,17,12,.48) !important; border-color: rgba(245,242,23
 }
 @media (min-width: 641px) and (max-width: 1024px) {
   .sky-booking-grid { grid-template-columns: minmax(0, 1fr) minmax(300px, .78fr); }
-  .sky-home > section:first-child { min-height: 300px; }
-  .sky-hero-aircraft { width: 61%; }
+  .sky-home > section:first-child { min-height: 320px; }
+  .sky-hero-aircraft { top: -3%; right: 0; width: 92%; height: 108%; object-position: right center; }
 }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }

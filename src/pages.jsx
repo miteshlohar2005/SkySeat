@@ -163,10 +163,6 @@ export function Home() {
             <div className="sky-hero-rule" />
             <p className="mt-4 text-white/70">Thoughtful journeys, exceptional aircraft, and a seat that feels entirely yours.</p>
           </div>
-          <div className="sky-hero-detail" aria-hidden="true">
-            <span className="sky-hero-detail-line" />
-            <span>FLY FURTHER / ARRIVE DIFFERENT</span>
-          </div>
         </div>
       </section>
       <div className="sky-booking-grid">
