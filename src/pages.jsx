@@ -149,7 +149,7 @@ export function Home() {
         <button type="button" aria-label={'More ' + label} className={ghost} disabled={k === 'infants' && s.infants >= s.adults} onClick={() => change(k, 1)}>+</button>
       </span></div>)
   return (
-    <div>
+    <div className="sky-home">
       <section className="relative overflow-hidden rounded-3xl border border-line bg-gradient-to-br from-navy-900 to-navy-700 px-6 py-14 text-white sm:px-12">
         <RouteMap routes={[{ from: s.from, to: s.to }]} plane className="absolute inset-0 h-full w-full text-white opacity-60" />
         <div className="relative max-w-xl">
@@ -213,7 +213,7 @@ export function Results() {
   const pick = (f) => choose(f, s)
   const airlines = [...new Map(all.map((f) => [f.airlineCode, f.airline]))]
   return (
-    <div>
+    <div className="sky-results">
       <div className="mb-4"><h1 className="text-2xl font-bold">{plan.length > 1 ? `Flight ${idx + 1} of ${plan.length}: ` : ''}{A?.city} → {B?.city}</h1>
         <p className="text-muted">{nice(cur.depart)} · {paxOf(s) + s.infants} traveler(s) · {CABINS[s.cabin]?.label} · {list.length} of {all.length} flights</p></div>
       <div className="mb-4 flex gap-2 overflow-x-auto pb-1" role="group" aria-label="Nearby dates">
@@ -366,7 +366,7 @@ export function Seats() {
   const fare = totalPrice(flight, s) + extra.reduce((t, f) => t + totalPrice(f, s), 0)
 
   return (
-    <div className="space-y-6">
+    <div className="sky-seats space-y-6">
       {/* Flight & Layout Switcher Header */}
       <div className={card + ' flex flex-col gap-4 md:flex-row md:items-center md:justify-between'}>
         <div>
@@ -502,7 +502,7 @@ export function Passengers() {
     setPassengers(f); setContact(c); nav('/payment')
   }
   return (
-    <form onSubmit={submit} className="mx-auto max-w-3xl space-y-4" noValidate>
+    <form onSubmit={submit} className="sky-passengers mx-auto max-w-3xl space-y-4" noValidate>
       <h1 className="text-2xl font-bold">Passenger Details & Travel Preferences</h1>
       <Hold />
       {f.map((p, i) => {
@@ -569,7 +569,7 @@ export function Payment() {
   }
   const Row = ({ l, v }) => <div className="flex justify-between text-sm"><span className="text-muted">{l}</span><span>{v}</span></div>
   return (
-    <form onSubmit={pay} noValidate className="grid gap-6 lg:grid-cols-[1fr_320px]">
+    <form onSubmit={pay} noValidate className="sky-payment grid gap-6 lg:grid-cols-[1fr_320px]">
       <div className="space-y-4"><h1 className="text-2xl font-bold">Add-ons & payment</h1><Hold />
         <fieldset className={card + ' space-y-3'}><legend className="px-2 font-semibold">Baggage & Flight Extras (per passenger)</legend>
           <div className="flex flex-wrap gap-2">{[[0, 'Standard bag (Included)'], [10, '+10 kg ₹950'], [20, '+20 kg ₹1,800']].map(([v, l]) => <label key={v} className={ghost + (addons.bag === v ? ' !border-sky-brand text-sky-brand' : '') + ' cursor-pointer'}><input type="radio" name="bag" className="sr-only" checked={addons.bag === v} onChange={() => setAddons({ ...addons, bag: v })} />{l}</label>)}</div>
@@ -642,7 +642,7 @@ export function Confirmation() {
   const png = async () => { setFlip(false); save(await toPng(front.current, { pixelRatio: 2, backgroundColor: '#0d1b2a' }), `boarding-pass-${b.ref}.png`) }
   const ad = b.addons || {}
   return (
-    <div className="mx-auto max-w-2xl"><Confetti />
+    <div className="sky-confirmation mx-auto max-w-2xl"><Confetti />
       <div className="text-center"><div className="mx-auto grid h-14 w-14 place-items-center rounded-full bg-success text-2xl text-white">✓</div>
         <h1 className="mt-3 text-3xl font-bold">{b.payStatus === 'unpaid' ? 'Booking reserved' : 'Booking confirmed'}</h1><p className="text-muted">Reference <b className="text-ink">{b.ref}</b></p></div>
       <div className="mt-4 print:hidden"><DuePay b={b} /></div>
@@ -773,7 +773,7 @@ export function Dashboard() {
   const fav = Object.keys(freq).sort((a, b) => freq[b] - freq[a])[0]
   const shown = bookings.filter((b) => kind(b) === tab); const stat = (l, v) => <div className={card}><div className="text-sm text-muted">{l}</div><div className="font-display text-2xl">{v}</div></div>
   return (
-    <div className="space-y-5">
+    <div className="sky-dashboard space-y-5">
       <h1 className="text-2xl font-bold">My trips</h1>
       <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
         <div className={card}><div className="text-sm text-muted">Next trip</div>{next ? <><div className="font-display text-3xl">{days > 0 ? `${days} days` : days === 0 ? 'Today' : 'Departed'}</div><div className="text-sm">{next.flight.from} → {next.flight.to} · {nice(next.flight.date)}</div></> : <div className="text-muted">No upcoming trips</div>}</div>

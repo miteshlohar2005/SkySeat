@@ -28,9 +28,9 @@ export function SeatMap({
   }
 
   return (
-    <div className="flex flex-col items-center">
+    <div className="seat-map flex flex-col items-center">
       {/* Visual Aircraft Fuselage Container */}
-      <div className="relative w-full max-w-xl rounded-t-[100px] rounded-b-[40px] border-2 border-line bg-surface-2/70 p-4 pt-10 shadow-inner sm:px-8">
+      <div className="seat-fuselage relative w-full max-w-xl rounded-t-[100px] rounded-b-[40px] border-2 border-line bg-surface-2/70 p-4 pt-10 shadow-inner sm:px-8">
         {/* Cockpit Indicator */}
         <div className="mx-auto mb-6 flex flex-col items-center">
           <div className="h-2 w-16 rounded-full bg-line" />

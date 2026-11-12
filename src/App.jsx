@@ -13,7 +13,7 @@ import {
 } from './pages.jsx'
 
 export default function App() {
-  const [theme, setTheme] = useState(() => localStorage.getItem('theme') || 'light')
+  const [theme, setTheme] = useState(() => localStorage.getItem('theme') || 'dark')
   const { pathname } = useLocation()
   useEffect(() => {
     document.documentElement.dataset.theme = theme
@@ -24,18 +24,17 @@ export default function App() {
   }, [pathname])
 
   const nl = ({ isActive }) =>
-    'rounded-lg px-3 py-1.5 text-sm transition-colors ' +
-    (isActive ? 'bg-surface-2 text-sky-brand font-semibold' : 'text-muted hover:text-ink')
+    'sky-nav-link rounded-lg px-3 py-1.5 text-sm transition-colors ' +
+    (isActive ? 'is-active font-semibold' : 'text-muted hover:text-ink')
 
   return (
-    <div className="flex min-h-screen flex-col">
-      <header className="sticky top-0 z-20 border-b border-line bg-bg/85 backdrop-blur">
-        <nav className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3">
-          <Link to="/" className="flex items-center gap-2 font-display text-xl font-bold tracking-tight">
-            <span>✈ Sky<span className="text-sky-brand">Seat</span></span>
-            <span className="hidden rounded-full border border-line bg-surface-2 px-2 py-0.5 text-[10px] font-semibold text-muted sm:inline-block">
-              Seat Selection & Pax Management
-            </span>
+    <div className="sky-app flex min-h-screen flex-col">
+      <header className="sky-nav sticky top-0 z-20 border-b border-line bg-bg/85 backdrop-blur">
+        <nav className="mx-auto flex max-w-6xl items-center justify-between px-4 py-4">
+          <Link to="/" className="sky-brand flex items-center gap-3 font-display text-xl font-bold tracking-tight">
+            <span className="brand-mark">✦</span>
+            <span>SKY<span>SEAT</span></span>
+            <span className="hidden brand-tag sm:inline-block">PRIVATE AVIATION / 01</span>
           </Link>
           <div className="flex items-center gap-1.5">
             <NavLink to="/" end className={nl}>Search</NavLink>
@@ -51,7 +50,7 @@ export default function App() {
         </nav>
       </header>
 
-      <main className="mx-auto w-full max-w-6xl flex-1 px-4 py-6 pb-28">
+      <main data-route={pathname} className="mx-auto w-full max-w-6xl flex-1 px-4 py-8 pb-28">
         <div key={pathname} className="page">
           <Routes>
             <Route path="/" element={<Home />} />
